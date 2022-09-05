@@ -21,11 +21,17 @@ public class ReaderController {
 	RestTemplate restTemplate;
 	
 	@GetMapping("/readersearchBooks")
-	public  List<Books> searchBooks(@RequestParam("category") String category,
-			@RequestParam ("authorName") String authorName, @RequestParam ("price")Long price) {
-		
+	public  List<Books> searchBooks(@RequestParam(name = "category",required = false)  String category,
+			@RequestParam (name = "authorName",required = false) String authorName,
+			@RequestParam  (name = "price",required = false) Long price)
+	{
+	 //localhost:8083/searchbooks?category=mystery&authorName=simon&price=1000	
+//		http://localhost:8083/searchbooks?category=mystery&authorName=simon&price=1000
 		List<Books> books= this.restTemplate.getForObject(
-		"http://localhost:8083/searchbooks?category={category}&authorName={authorName}&price={price}"+category+authorName+price, List.class);
+		"http://localhost:8083/searchbooks?category={category}&authorName={authorName}&price={price}",
+				List.class,category,authorName,price);
+	 
+		
 		return books;
 		
 	}
